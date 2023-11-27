@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- links -->
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- circle -->
+    <div class="box">
+      <div class="circle"></div>
+
+      <div class="screen">
+        <div class="weather">
+          <!-- date -->
+          <div class="date"></div>
+          <!-- city -->
+          <div class="city">Mumbai</div>
+          <!-- weather -->
+          <div class="img"><img src="img/sun.png" alt="sun image"></div>
+          <!--  -->
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let Alldate = document.querySelector(".date");
+      let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+      function clock() {
+        let date = new Date();
+
+        dd = date.getDate();
+        mm = months[date.getMonth()];
+        yy = date.getFullYear();
+
+        Alldate.innerHTML = mm + ", " + dd + " " + yy;
+      }
+      clock();
+
+
+    </script>
+  </body>
+</html>
