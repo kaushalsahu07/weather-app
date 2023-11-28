@@ -37,9 +37,12 @@ body{
 }
 .weather{
     width: 280px;
-    height: 530px;
+    height: 550px;
     border-radius: 45px;
-    background-color: #66acf3;
+    /* background-color: #66acf3; */
+    background: rgb(0,73,155);
+    background: linear-gradient(0deg, rgb(0, 87, 137) 0%, rgb(0, 88, 221) 10%, rgba(0,212,255,1) 100%);
+    
 }
 .date{
     color: #def0ff;
@@ -61,4 +64,48 @@ body{
 .img img{
     width: 150px;
     height: auto;
+}
+.temperature{
+    text-align: center;
+    margin-top: 15px;
+}
+.temperature .temp-word{
+    color: #def0ff;
+}
+.temperature .temp-no{
+    color: #fff;
+    font-size: 70px;
+    font-weight: 600;
+}
+.box-whf{
+    width: 260px;
+    height: 130px;
+    border-radius: 30px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    background: rgb(45,70,119);
+    background: linear-gradient(0deg, rgba(45,70,119,1) 0%, rgba(46,72,123,1) 50%, rgba(45,70,119,1) 100%);
+}
+.line{
+    width: 1px;
+    height: 70px;
+    border: 1px dashed rgb(95, 107, 137);
+    margin: 5px;
+}
+.whf-section{
+    width: 75px;
+    height: 90px;
+    text-align: center;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.whf-name{
+    color: #def0ff;
+}
+.whf-img img{
+    width: 40px;
 }
