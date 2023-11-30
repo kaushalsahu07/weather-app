@@ -1,87 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- links -->
-    <link rel="stylesheet" href="style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-    <title>Document</title>
-  </head>
-  <body>
-    <!-- circle -->
-    <div class="box">
-      <div class="circle"></div>
 
-      <div class="screen">
-        <div class="weather">
-          <!-- date -->
-          <div class="date"></div>
-          <!-- city -->
-          <div class="city">Mumbai</div>
-          <!-- weather -->
-          <div class="img"><img src="img/sun.png" alt="sun image"></div>
-          <!-- temperature -->
-          <div class="temperature">
-            <div class="temp-word">Temperature</div>
-            <div class="temp-no">32°</div>
-          </div>
-          <!-- wind humidity feeling -->
-          <div class="box-whf">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- links -->
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <title>Weather App</title>
+</head>
+
+<body>
+  <div class="box">
+    <!-- circle -->
+    <div class="circle"></div>
+    <!-- screen -->
+    <div class="screen">
+      <!-- error message -->
+      <div class="error">
+        <h1>City Not Found</h1>
+      </div>
+      <div class="weather">
+        <!-- date -->
+        <div class="date"></div>
+        <!-- city -->
+        <div class="city">Mumbai</div>
+        <!-- weather -->
+        <div class="img"><img id="whf-img" src="img/sun.png" alt="sun image"></div>
+        <!-- temperature -->
+        <div class="temperature">
+          <div class="temp-word">Temperature</div>
+          <div class="temp-no">32°</div>
+        </div>
+        <!-- wind humidity feeling -->
+        <div class="box-whf">
           <!-- wind -->
-            <!--  -->
-            <div class="whf-section">
-              <div class="whf">
-                <div class="whf-name">Wind</div>
-                <div class="whf-img"><img src="img/wind.png" alt="wind img"></div>
-                <div id="wind" class="whf-no">10</div>
-              </div>
-             </div>
-           <!--  -->
-           <hr class="line"></hr>
-           <!--  -->
-           <div class="whf-section">
+          <div class="whf-section">
+            <div class="whf">
+              <div class="whf-name">Wind</div>
+              <div class="whf-img"><img src="img/wind.png" alt="wind img"></div>
+              <div id="wind" class="whf-no">10</div>
+            </div>
+          </div>
+          <!-- line-1 -->
+          <hr class="line">
+          </hr>
+          <!-- humidity -->
+          <div class="whf-section">
             <div class="whf">
               <div class="whf-name">Humidity</div>
-              <div class="whf-img"><img src="img/wind.png" alt="wind img"></div>
+              <div class="whf-img"><img src="img/humidity.png" alt="wind img"></div>
               <div id="humidity" class="whf-no">10</div>
             </div>
-           </div>
-           <!--  -->
-           <hr class="line"></hr>
-            <!--  -->
-            <div class="whf-section">
-              <div class="whf">
-                <div class="whf-name">feels</div>
-                <div class="whf-img"><img src="img/wind.png" alt="wind img"></div>
-                <div id="pressure" class="whf-no">10</div>
-              </div>
-             </div>
-
+          </div>
+          <!-- line-2 -->
+          <hr class="line">
+          </hr>
+          <!-- feeling -->
+          <div class="whf-section">
+            <div class="whf">
+              <div class="whf-name">feels</div>
+              <div class="whf-img"><img src="img/feeling.png" alt="wind img"></div>
+              <div id="feeling" class="whf-no">10</div>
+            </div>
           </div>
         </div>
       </div>
+      <!-- search box -->
+      <div class="search-box">
+        <div class="icon"><i class="fa-solid fa-magnifying-glass"></i></div>
+        <input type="text" name="searchbox" id="searchbox" placeholder="Search Your City">
+        <button id="searchbtn"><i class="fa-solid fa-location-dot"></i></button>
+      </div>
     </div>
+  </div>
 
-    <script>
-      let Alldate = document.querySelector(".date");
-      let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  <script>
+    //date function
+    let Alldate = document.querySelector(".date");
+    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-      function clock() {
-        let date = new Date();
+    function clock() {
+      let date = new Date();
 
-        dd = date.getDate();
-        mm = months[date.getMonth()];
-        yy = date.getFullYear();
+      dd = date.getDate();
+      mm = months[date.getMonth()];
+      yy = date.getFullYear();
 
-        Alldate.innerHTML = mm + ", " + dd + " " + yy;
+      Alldate.innerHTML = mm + ", " + dd + " " + yy;
+    }
+    clock();
+    //Weather
+    let apiKey = "fac57f1e521322f36715219f6861d31a";
+    let api = `https://api.openweathermap.org/data/2.5/weather?units=metric&q=`;
+    let searchbox = document.querySelector("#searchbox");
+    let searchbtn = document.querySelector("#searchbtn");
+    let weatherImg = document.querySelector("#whf-img");
+    let error_message = document.querySelector(".error");
+    let weather_screen = document.querySelector(".weather");
+
+    //weather updates by using api 
+    async function weather(city) {
+      let response = await fetch(api + city + `&appid=${apiKey}`);
+      if (response.ok) {
+        let data = await response.json();
+
+        console.log(data);
+        //changes according to city
+        document.querySelector(".city").innerHTML = data.name;
+        document.querySelector(".temp-no").innerHTML = Math.floor(data.main.temp) + "º";
+        document.querySelector("#wind").innerHTML = Math.floor(data.wind.speed) + " m/s";
+        document.querySelector("#humidity").innerHTML = data.main.humidity + "%";
+        document.querySelector("#feeling").innerHTML = Math.floor(data.main.feels_like) + " ℃";
+
+        // image changes according to weather
+        if (data.weather[0].main === "Rain") {
+          weatherImg.src = "img/rain.png";
+        } else if (data.weather[0].main === "Clear") {
+          weatherImg.src = "img/sun.png";
+        } else if (data.weather[0].main === "Snow") {
+          weatherImg.src = "img/snow.png";
+        } else if (data.weather[0].main === "Clouds") {
+          weatherImg.src = "img/cloud.png";
+        } else if (data.weather[0].main === "Mist") {
+          weatherImg.src = "img/mist.png";
+        }
+
+      } else {
+        //error message
+        weather_screen.style.display = "none";
+        error_message.style.display = "block";
+
       }
-      clock();
+    }
 
+    //search city
+    searchbtn.addEventListener('click', () => {
+      weather(searchbox.value);
+    })
 
-    </script>
-  </body>
+    // Loction by using W3C Geolocation API
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
+    } else {
+      // Browser doesn't support Geolocation
+      weather("pune"); // Set default location to pune
+    }
+
+    // Get latitude and longitude
+    function successFunction(position) {
+      var lat = position.coords.latitude;
+      var long = position.coords.longitude;
+      // Call the function to get city name
+      getCityName(lat, long);
+    }
+
+    function errorFunction() {
+      // Error in getting location
+      weather("pune"); // Set default location to pune
+    }
+
+    // Function to get city name
+    function getCityName(lat, long) {
+      var geocoder = new google.maps.Geocoder();
+      var latLng = new google.maps.LatLng(lat, long);
+
+      geocoder.geocode({ 'latLng': latLng }, function (results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          if (results[1]) {
+            var city = results[0].address_components.filter(function (component) {
+              return component.types.includes("locality");
+            })[0];
+            weather(city.long_name);
+          } else {
+            weather("pune"); // Set default location to pune
+          }
+        } else {
+          weather("pune"); // Set default location to pune
+        }
+      });
+    }
+
+  </script>
+</body>
+
 </html>
