@@ -167,28 +167,6 @@
       // Error in getting location
       weather("pune"); 
     }
-
-    // // Function to get city name
-    // function getCityName(lat, long) {
-    //   var geocoder = new google.maps.Geocoder();
-    //   var latLng = new google.maps.LatLng(lat, long);
-
-    //   geocoder.geocode({ 'latLng': latLng }, function (results, status) {
-    //     if (status == google.maps.GeocoderStatus.OK) {
-    //       if (results[1]) {
-    //         var city = results[0].address_components.filter(function (component) {
-    //           return component.types.includes("locality");
-    //         })[0];
-    //         weather(city.long_name);
-    //       } else {
-    //         weather("pune"); // Set default location to pune
-    //       }
-    //     } else {
-    //       weather("pune"); // Set default location to pune
-    //     }
-    //   });
-    // }
-
   </script>
 </body>
 
