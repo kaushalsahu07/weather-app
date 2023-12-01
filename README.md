@@ -5,7 +5,7 @@
 
 ## API key 
 ```javascript
-let apiKey = "fac57f1e521322f36715219f6861d31a";
+let apiKey = "Your API Key";
 ```
 
 ## Loction by using W3C Geolocation API For Setting default City 
