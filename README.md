@@ -1,16 +1,14 @@
 # Weather 
 > Weather website by using HTML, CSS, JAVASCRIPT & API of [openweather.org](https://openweathermap.org/current)
-## how it's look like?
-
 
 ## API key 
 ```javascript
 let apiKey = "Your API Key";
 ```
 
-## Loction by using W3C Geolocation API For Setting default City 
+## This Code Convert Longitude & Latitude Into City Name
 ```javascript
-    if (navigator.geolocation) {
+     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
     } else {
       // Browser doesn't support Geolocation
@@ -18,36 +16,24 @@ let apiKey = "Your API Key";
     }
 
     // Get latitude and longitude
-    function successFunction(position) {
+   async function successFunction(position) {
       var lat = position.coords.latitude;
       var long = position.coords.longitude;
-      // Call the function to get city name
-      getCityName(lat, long);
+      var map = await fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${long}&limit=5&appid=${apiKey}`)
+      var data1 = await map.json();
+      
+      let loc = data1[0].name;
+
+      weather(loc)
     }
 
     function errorFunction() {
       // Error in getting location
-      weather("pune"); // Set default location to pune
-    }
-
-    // Function to get city name
-    function getCityName(lat, long) {
-      var geocoder = new google.maps.Geocoder();
-      var latLng = new google.maps.LatLng(lat, long);
-
-      geocoder.geocode({ 'latLng': latLng }, function (results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-          if (results[1]) {
-            var city = results[0].address_components.filter(function (component) {
-              return component.types.includes("locality");
-            })[0];
-            weather(city.long_name);
-          } else {
-            weather("pune"); // Set default location to pune
-          }
-        } else {
-          weather("pune"); // Set default location to pune
-        }
-      });
+      weather("pune"); 
     }
 ```
+
+## how it's look like?
+![output](https://github.com/kaushalsahu07/weather/assets/131914333/d97b6f52-983f-4dbe-bda7-bcd347a92bbf)
+
+> By Clicking To Location Icon You Can Search Any City
