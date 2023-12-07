@@ -126,7 +126,8 @@
         } else if (data.weather[0].main === "Mist") {
           weatherImg.src = "img/mist.png";
         }
-
+         weather_screen.style.display = "block";
+         error_message.style.display = "none";
       } else {
         //error message
         weather_screen.style.display = "none";
